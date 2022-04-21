@@ -1,0 +1,11 @@
+:root {
+    --main-color: #f6194c;
+    --text-color: #333;
+    --background-color: #fff;
+}
+.header{
+    background-color: var(--main-color);
+    color: #fff;
+    padding: 4px;
+    text-align: center;
+}

@@ -3,11 +3,8 @@ import { useState } from "react";
 
 const Form = () => {
   const [val, setVal] = useState();
-  function saveStaticDataToFile() {
-    var blob = new Blob(["Welcome to Websparrow.org."], {
-      type: "text/plain;charset=utf-8",
-    });
-    saveAs(blob, "static.txt");
+  function saveData() {
+    //
   }
   return (
     <div>
@@ -43,7 +40,7 @@ const Form = () => {
         type="text"
         placeholder="Nội dung liên hệ"
       ></input>
-      <button onClick={saveDynamicDataToFile}>Submit</button>
+      <button onClick={saveData}>Submit</button>
       <button onClick={() => setVal(() => "")}>Clear</button>
     </div>
   );
