@@ -3,68 +3,84 @@ import { useState } from "react";
 import Axios from "axios";
 
 const Form = () => {
-  const [val, setVal] = useState();
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [notes, setNotes] = useState("");
-  const saveData = async (e) => {
+  const [data, setData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    notes: "",
+  });
+
+  function submit(e) {
     e.preventDefault();
-    const response = await Axios.post(
+    Axios.post(
       "https://trantam.herokuapp.com/api/form/submit",
+      JSON.stringify({
+        name: data.name,
+        email: data.email,
+        phone: data.phone,
+        notes: data.notes,
+      }),
       {
         headers: { "Content-Type": "application/json" },
-        data: {
-          username: username,
-          email: email,
-          phone: phone,
-          notes: notes,
-        },
       }
     )
       .then((response) => {
-        console.log(response);
+        console.log(JSON.stringify(response.data));
       })
       .catch((err) => console.log(err));
-  };
+  }
+  function handle(e) {
+    const newData = { ...data };
+    newData[e.target.id] = e.target.value;
+    setData(newData);
+    console.log(newData);
+  }
   return (
     <div>
-      <form onSubmit={saveData}>
+      <form>
         <h2>Họ và tên:</h2>
         <input
-          id="username"
-          name="username"
-          value={val}
+          onChange={(e) => handle(e)}
+          id="name"
+          name="name"
+          value={data.name}
           type="text"
           placeholder="Họ và tên"
         ></input>
         <h2>Email:</h2>
         <input
+          onChange={(e) => handle(e)}
           id="email"
           name="email"
-          value={val}
+          value={data.email}
           type="text"
           placeholder="Email"
         ></input>
         <h2>Số điện thoại:</h2>
         <input
+          onChange={(e) => handle(e)}
           id="phone"
           name="phone"
-          value={val}
+          value={data.phone}
           type="text"
           placeholder="Số điện thoại"
         ></input>
         <h2>Nội dung liên hệ:</h2>
         <input
+          onChange={(e) => handle(e)}
           id="notes"
           name="notes"
-          value={val}
+          value={data.notes}
           type="text"
           placeholder="Nội dung liên hệ"
         ></input>
         <div className="btns">
-          <button onClick={saveData}>Submit</button>
-          <button onClick={() => setVal(() => "")}>Clear</button>
+          <button onClick={submit}>Submit</button>
+          <button
+            onClick={() => document.querySelectorAll("input[type=text]").value}
+          >
+            Clear
+          </button>
         </div>
       </form>
     </div>
