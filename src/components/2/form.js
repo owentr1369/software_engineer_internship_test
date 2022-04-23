@@ -3,33 +3,36 @@ import { useState } from "react";
 import Axios from "axios";
 
 const Form = () => {
-  let testObject = {
-    name: "abc",
-    email: "abc",
-    phone: "abc",
-    notes: "abc",
-  };
   const [val, setVal] = useState();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [notes, setNotes] = useState("");
-  const saveData = () => {
-    Axios.post(testObject, {
-      name: username,
-      email: email,
-      phone: phone,
-      notes: notes,
-    }).then((response) => {
-      console.log(response);
-    });
+  const saveData = async (e) => {
+    e.preventDefault();
+    const response = await Axios.post(
+      "https://trantam.herokuapp.com/api/form/submit",
+      {
+        headers: { "Content-Type": "application/json" },
+        data: {
+          username: username,
+          email: email,
+          phone: phone,
+          notes: notes,
+        },
+      }
+    )
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((err) => console.log(err));
   };
   return (
     <div>
-      <form>
+      <form onSubmit={saveData}>
         <h2>Họ và tên:</h2>
         <input
-          id="name"
+          id="username"
           name="username"
           value={val}
           type="text"
@@ -45,7 +48,7 @@ const Form = () => {
         ></input>
         <h2>Số điện thoại:</h2>
         <input
-          id="phone-number"
+          id="phone"
           name="phone"
           value={val}
           type="text"
