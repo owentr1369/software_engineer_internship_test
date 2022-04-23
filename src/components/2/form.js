@@ -3,13 +3,19 @@ import { useState } from "react";
 import Axios from "axios";
 
 const Form = () => {
+  let testObject = {
+    name: "abc",
+    email: "abc",
+    phone: "abc",
+    notes: "abc",
+  };
   const [val, setVal] = useState();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [notes, setNotes] = useState("");
   const saveData = () => {
-    Axios.post("https://trantam.herokuapp.com/api/form/submit", {
+    Axios.post(testObject, {
       name: username,
       email: email,
       phone: phone,
